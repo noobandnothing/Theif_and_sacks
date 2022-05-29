@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1652034798 source:/home/noob/DataStructure/Proj/main.cpp
+	"parts.hpp"
+
+1652035663 /home/noob/DataStructure/Proj/parts.hpp
+	<iostream>
+	<stack>
+
