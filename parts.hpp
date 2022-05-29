@@ -1,41 +1,36 @@
-#include <iostream>
-#include <stack>
-typedef long long elementtype;
-typedef std::stack<elementtype> MyStack;
+#include <bits/stdc++.h>
+using namespace std;
 
-bool FindElement(MyStack sample ,elementtype target){
-    while(!sample.empty()){
-        if(sample.top()== target)
-            return true;
-        sample.pop();
-    }
-    return false;
+typedef  long long elementtype;
+typedef  vector<int> container;
+elementtype MaxE = -1;
+map<elementtype,int> count_WH_S;
+
+bool FindElement(map<elementtype,int> &g1,elementtype target){
+    map<elementtype,int>::iterator x = g1.find(target);
+    if(x->second == 0)
+        return false;
+    else
+        return true;
 }
-
-void ReverseStack(MyStack &sample){
-    MyStack tmp;
-    while(!sample.empty()){
-        tmp.push(sample.top());
-        sample.pop();
-    }
-    sample = tmp;
-}
-
 
 /* PROGRAM PARTS */
-
-void GetNumOfEachWH_Sacks(MyStack &workhouse_stacks,elementtype Num_of_Workhouse){
+void GetNumOfEachWH_Sacks(container &WH_S,elementtype WH_num){
     elementtype input;
-    for(int counter = 0; counter < Num_of_Workhouse ; counter++){
+    map<elementtype,int>::iterator x;
+    for(int counter = 0; counter < WH_num; counter++){
         std::cin >> input;
-        workhouse_stacks.push(input);
-    }
-}
-
-void ReturnAllAsItwas(MyStack &tmp_stack,MyStack &workhouse_stacks){
-    while(!tmp_stack.empty()){
-        workhouse_stacks.push(tmp_stack.top());
-        tmp_stack.pop();
+        if(input > MaxE)
+            MaxE = input;
+        WH_S.push_back(input);
+        x = count_WH_S.find(input);
+        if(x->second == 0){
+            count_WH_S.insert(pair<int, int>(input,1));
+            x = count_WH_S.find(input);
+        }else{
+            x = count_WH_S.find(input);
+            x->second = x->second+1;
+        }
     }
 }
 
@@ -43,9 +38,4 @@ void maxChecking(elementtype &sum,elementtype &max_value){
     if(sum != 0 )
         if(sum > max_value)
             max_value = sum;
-}
-
-void GoNext(MyStack &tmp_stack,MyStack &workhouse_stacks){
-    tmp_stack.push(workhouse_stacks.top());
-    workhouse_stacks.pop();
 }

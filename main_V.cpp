@@ -1,21 +1,27 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 typedef  long long elementtype;
 typedef  vector<int> container;
+elementtype MaxE = -1;
 map<elementtype,int> count_WH_S;
 
-bool FindElement(map<elementtype,int> &g1,elementtype target){
-    map<elementtype,int>::iterator x = g1.find(target);
-    if(x == g1.end())
+bool FindElement(container &g1,elementtype target){
+    for (container::iterator x = g1.begin(); x != g1.end() ; ++x){
+        if(*x == target)
+            return true;
+    }
+    return false;
+   /* map<elementtype,int>::iterator x = count_WH_S.find(target);
+    if(x->second == 0)
         return false;
     else
-        return true;
+        return true;*/
+
 }
 
 /* PROGRAM PARTS */
-void GetNumOfEachWH_Sacks(container &WH_S,elementtype WH_num,elementtype &MaxE){
+void GetNumOfEachWH_Sacks(container &WH_S,elementtype WH_num){
     elementtype input;
     map<elementtype,int>::iterator x;
     for(int counter = 0; counter < WH_num; counter++){
@@ -40,10 +46,8 @@ void maxChecking(elementtype &sum,elementtype &max_value){
             max_value = sum;
 }
 
-
 int main()
 {
-    std::ios_base::sync_with_stdio(false);
     // Test Var
     int Test = 0;
     std::cin>>Test;
@@ -53,12 +57,10 @@ int main()
                 int WH_num = 0;
                 std::cin>>WH_num;
 
-                container WH_S;
-                map<elementtype,int>  used_num;
-                elementtype MaxE = -1;
+                container WH_S,used_num;
                 elementtype max_value = 0;
 
-                GetNumOfEachWH_Sacks(WH_S,WH_num,MaxE);
+                GetNumOfEachWH_Sacks(WH_S,WH_num);
 
 
                 for(int counter = 1 ; counter <= WH_num; counter++){
@@ -69,10 +71,10 @@ int main()
                     if(tmp == 0){
                         continue;
                     }else{
-                            if(FindElement(used_num,tmp) == true){
+                            if(FindElement(used_num,tmp)){
                                 continue;
                             }else{
-                                used_num.insert(pair<elementtype, int>(tmp,1));
+                                used_num.push_back(tmp);
                                 bool flag = false;
                                 if(tmp == MaxE){
                                     map<elementtype,int>::iterator x = count_WH_S.find(tmp);
@@ -82,7 +84,7 @@ int main()
                                     }
                                 }
                                 for (container::iterator tmp_it = WH_S.begin(); tmp_it != WH_S.end() ; ++tmp_it){
-                                    //cout<<"SUM : "<<tmp <<" := " <<sum<<endl;
+                                   // cout<<"SUM : "<<tmp <<" := " <<sum<<endl;
                                     if(*tmp_it >= tmp){
                                         flag = true;
                                         sum+=tmp;
